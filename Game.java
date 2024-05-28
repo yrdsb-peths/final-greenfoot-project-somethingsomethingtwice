@@ -12,7 +12,7 @@ public class Game extends World
     public Game()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1024, 576, 1);
+        super(512, 288, 1);
         deliveryMan = new DeliveryMan();
         addObject(deliveryMan, 300, 200);
     }
