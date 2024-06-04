@@ -21,9 +21,8 @@ public class Game extends World
     public Game()
     {    
         super(512, 288, 1, false);
-        originalBackground = getBackground();
+        originalBackground = new GreenfootImage("board.jpg");
         originalWidth = originalBackground.getWidth();
-        System.out.println(originalWidth);
         originalHeight = originalBackground.getHeight();
         addObject(deliveryMan, 0, 0);
         addObject(debugLabel, 512 / 2, 16);
@@ -41,10 +40,14 @@ public class Game extends World
         newBackground.setColor(Color.CYAN);
         newBackground.fill();
         //newBackground.scale((int) (originalWidth / zoom + 0.5), (int) (originalHeight / zoom + 0.5));
-        newBackground.drawImage(originalBackground, (int) (((-cX % originalWidth) / zoom) / zoom + 0.5), (int) (-cY / zoom + 0.5));
-        //newBackground.drawImage(originalBackground, (int) ((cX % originalWidth) / zoom + 0.5), (int) ((-cY % originalHeight) / zoom + 0.5));
-        //newBackground.drawImage(originalBackground, (int) ((-cX % originalWidth) / zoom + 0.5), (int) ((cY % originalHeight) / zoom + 0.5));
-        //newBackground.drawImage(originalBackground, (int) ((cX % originalWidth) / zoom + 0.5), (int) ((cY % originalHeight) / zoom + 0.5));
+        double leftX = (-cX - originalWidth * 2);
+        double rightX = -cX;
+        double topY = (-cY - originalHeight * 2);
+        double bottomY = -cY;
+        newBackground.drawImage(originalBackground, (int) (leftX / zoom + 0.5), (int) (topY / zoom + 0.5));
+        newBackground.drawImage(originalBackground, (int) (rightX / zoom + 0.5), (int) (topY / zoom + 0.5));
+        newBackground.drawImage(originalBackground, (int) (leftX / zoom + 0.5), (int) (bottomY / zoom + 0.5));
+        newBackground.drawImage(originalBackground, (int) (rightX / zoom + 0.5), (int) (bottomY / zoom + 0.5));
         setBackground(newBackground);
     }
     
