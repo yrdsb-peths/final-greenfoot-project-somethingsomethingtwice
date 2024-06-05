@@ -48,8 +48,8 @@ public class DeliveryMan extends GameObject
         force.add(drag);
         force.add(rollingResistance);
         force.divide(mass);
-        
-        if (pedal == -1 && force.getLength() > velocity.getLength())
+    
+        if (pedal == -1 && force.getLength() >= velocity.getLength())
             velocity.set(0, 0);
         else
             velocity.add(force);
@@ -57,7 +57,7 @@ public class DeliveryMan extends GameObject
         attemptExactMove();
         Game game = (Game) getWorld();
         game.setCamera(getExactX() - (game.getWidth() * game.getZoom()) / 2, getExactY() - (game.getHeight() * game.getZoom()) / 2);
-        game.setDebugLabel("Velocity: " + velocity + "\n" + "Position: " + getExactX() + ", " + getExactY());
+        //game.setDebugLabel("Velocity: " + velocity + "\nPosition: " + getExactX() + ", " + getExactY() + "\nCamera: " + game.getCameraX() + ", " + game.getCameraY());
         camera();
     }
     

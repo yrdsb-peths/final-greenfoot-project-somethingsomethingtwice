@@ -21,11 +21,11 @@ public class Game extends World
     public Game()
     {    
         super(512, 288, 1, false);
-        originalBackground = new GreenfootImage("board.jpg");
+        originalBackground = new GreenfootImage("grass.jpg");
         originalWidth = originalBackground.getWidth();
         originalHeight = originalBackground.getHeight();
         addObject(deliveryMan, 0, 0);
-        addObject(debugLabel, 512 / 2, 16);
+        addObject(debugLabel, 512 / 2, 24);
     }
     
     public double getCameraX() {return cX;}
@@ -35,23 +35,29 @@ public class Game extends World
     public void setCamera(double cX, double cY) {
         this.cX = cX;
         this.cY = cY;
-        //newBackground = new GreenfootImage(originalBackground.getWidth(), originalBackground.getHeight());
-        newBackground = new GreenfootImage(512, 288);
+        newBackground = new GreenfootImage(100, 100);
         newBackground.setColor(Color.CYAN);
         newBackground.fill();
-        //newBackground.scale((int) (originalWidth / zoom + 0.5), (int) (originalHeight / zoom + 0.5));
-        double leftX = (-cX - originalWidth * 2);
-        double rightX = -cX;
-        double topY = (-cY - originalHeight * 2);
-        double bottomY = -cY;
-        newBackground.drawImage(originalBackground, (int) (leftX / zoom + 0.5), (int) (topY / zoom + 0.5));
-        newBackground.drawImage(originalBackground, (int) (rightX / zoom + 0.5), (int) (topY / zoom + 0.5));
-        newBackground.drawImage(originalBackground, (int) (leftX / zoom + 0.5), (int) (bottomY / zoom + 0.5));
-        newBackground.drawImage(originalBackground, (int) (rightX / zoom + 0.5), (int) (bottomY / zoom + 0.5));
+        int rightX = Math.floorMod((int) (-cX + 0.5), originalWidth);
+        int leftX = rightX - originalWidth;
+        int bottomY = Math.floorMod((int) (-cY + 0.5), originalHeight);
+        int topY = bottomY - originalHeight;
+        newBackground.drawImage(originalBackground, leftX, topY);
+        newBackground.drawImage(originalBackground, rightX, topY);
+        newBackground.drawImage(originalBackground, leftX, bottomY);
+        newBackground.drawImage(originalBackground, rightX, bottomY);
+        newBackground.scale((int) (originalWidth / zoom + 0.5), (int) (originalHeight / zoom + 0.5));
         setBackground(newBackground);
     }
     
     public void setDebugLabel(String value) {
         debugLabel.setValue(value);
+    }
+    
+    // Utility function from 
+    // https://stackoverflow.com/questions/55205437/whats-a-method-that-works-exactly-like-math-floormod-but-with-floats-instead
+    private double floatMod(double x, double y){
+        // x mod y behaving the same way as Math.floorMod but with doubles
+        return (x - Math.floor(x/y) * y);
     }
 }
