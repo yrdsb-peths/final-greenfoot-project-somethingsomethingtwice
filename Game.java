@@ -21,7 +21,7 @@ public class Game extends World
     public Game()
     {    
         super(512, 288, 1, false);
-        originalBackground = new GreenfootImage("grass.jpg");
+        originalBackground = new GreenfootImage("grass.png");
         originalWidth = originalBackground.getWidth();
         originalHeight = originalBackground.getHeight();
         addObject(deliveryMan, 0, 0);
